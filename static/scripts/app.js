@@ -30,12 +30,13 @@ let swipingStartTime = null;
 let swipingEndPosition = null;
 let swipingEndTime = null;
 
-img.addEventListener('mousedown', e => {
+function actionDown(e) {
     swiping = true;
     swipingStartPosition = {x: e.clientX, y: e.clientY};
     swipingStartTime = Date.now();
-});
-img.addEventListener('mouseup', e => {
+}
+
+function actionUp(e) {
     swiping = false;
     swipingEndPosition = {x: e.clientX, y: e.clientY};
     swipingEndTime = Date.now();
@@ -47,5 +48,10 @@ img.addEventListener('mouseup', e => {
     additionalVelocity *= Math.abs(deltaPosition.x) / e.srcElement.offsetWidth; // scale using distance
     additionalVelocity *= deltaTime / 50.0; // scale using time
     console.log(deltaTime);
-    velocity += additionalVelocity;
-});
+    velocity += additionalVelocity;    
+}
+
+img.addEventListener('mousedown', actionDown);
+img.addEventListener('mouseup', actionUp);
+img.addEventListener('touchstart', actionDown);
+img.addEventListener('touchend', actionUp);
